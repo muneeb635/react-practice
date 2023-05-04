@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import ViewAllName from "./viewAllName";
-const fullname = [];
-let id = 1;
+
 export default function MainForm() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
-  const handelAdd = (e) => {
-    if (fname !== "" && lname !== "") {
-      const temp = { id, fname, lname };
-      fullname.push(temp);
-      id++;
-      setFname("");
-      setLname("");
-    }
-  };
+  const [toUpdate, setToUpdate] = useState(-1);
+  const [data, SetData] = useState([
+    {
+      fname: "Shahzhaib",
+      lname: "Ishaq",
+    },
+  ]);
+
+  const handelAdd = useCallback(() => {
+    data.push({ fname, lname });
+    SetData([...data]);
+  }, [data, fname, lname]);
+  const handleToUpdate = useCallback(
+    (index) => {
+      setFname(data[index].fname);
+      setLname(data[index].lname);
+      setToUpdate(index);
+    },
+    [data]
+  );
+  const handleUpdate = useCallback(() => {
+    data[toUpdate] = { fname, lname };
+    SetData([...data]);
+  }, [fname, lname, data, toUpdate]);
 
   return (
     <div>
@@ -32,8 +46,14 @@ export default function MainForm() {
         placeholder="last name"
         onChange={(e) => setLname(e.target.value)}
       />
-      <button onClick={handelAdd}>Submit</button>
-      <ViewAllName name={fullname} />
+      <button
+        onClick={() => {
+          toUpdate !== 1 ? handleUpdate() : handelAdd();
+        }}
+      >
+        {toUpdate !== -1 ? "Update" : "Submit"}
+      </button>
+      <ViewAllName data={data} handleToUpdate={handleToUpdate} />
     </div>
   );
 }
