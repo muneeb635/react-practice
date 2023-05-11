@@ -25,9 +25,17 @@ export default function MainForm() {
     },
     [data]
   );
+  const handeldelet = useCallback(
+    (indux) => {
+      data.splice(indux, 1);
+      SetData([...data]);
+    },
+    [data, SetData]
+  );
   const handleUpdate = useCallback(() => {
     data[toUpdate] = { fname, lname };
     SetData([...data]);
+    setToUpdate(-1);
   }, [fname, lname, data, toUpdate]);
 
   return (
@@ -48,12 +56,16 @@ export default function MainForm() {
       />
       <button
         onClick={() => {
-          toUpdate !== 1 ? handleUpdate() : handelAdd();
+          toUpdate !== -1 ? handleUpdate() : handelAdd();
         }}
       >
         {toUpdate !== -1 ? "Update" : "Submit"}
       </button>
-      <ViewAllName data={data} handleToUpdate={handleToUpdate} />
+      <ViewAllName
+        data={data}
+        handleToUpdate={handleToUpdate}
+        handeldelet={handeldelet}
+      />
     </div>
   );
 }

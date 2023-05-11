@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function ViewAllName({ data, handleToUpdate }) {
+export default function ViewAllName({ data, handleToUpdate, handeldelet }) {
   return (
     <div>
       <table>
@@ -8,7 +8,7 @@ export default function ViewAllName({ data, handleToUpdate }) {
           <tr>
             <td>First Name</td>
             <td>Last Name</td>
-            {/* <td>delete</td> */}
+            <td>delete</td>
             <td>update</td>
           </tr>
           {data.map((key, ind) => {
@@ -17,7 +17,7 @@ export default function ViewAllName({ data, handleToUpdate }) {
                 <td>{key.fname}</td>
                 <td>{key.lname}</td>
                 <td>
-                  {/* <button onClick={() => handeldelet(key.id)}>delete</button> */}
+                  <button onClick={() => handeldelet(ind)}>delete</button>
                 </td>
                 <td>
                   <button onClick={() => handleToUpdate(ind)}>update</button>

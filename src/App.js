@@ -1,14 +1,16 @@
 import './App.css';
-import MainForm from './component/mainForm';
-import ViewAllName from './component/viewAllName';
+import Login from './component/login';
+import Singup from './component/singup';
+import Home from './component/home';
 import { BrowserRouter,Route,Routes } from 'react-router-dom';
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Routes>
-      <Route path='/' element={<MainForm/>}/>
-      <Route path='/allname' element={<ViewAllName/>}/>
+     <Route path='/' element={<Login/>}/>
+      <Route path='/singup' element={<Singup/>}/>
+      <Route path='/home' element={<Home/>}/>
       </Routes>
         </BrowserRouter>
     </div>
